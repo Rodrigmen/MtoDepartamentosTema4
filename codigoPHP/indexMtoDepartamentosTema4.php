@@ -9,7 +9,7 @@
     </head>
     <body>
         <header>
-            <a href="../indexProyectoTema4.php">
+            <a href="../../indexProyectoTema4.php">
                 <img class="imgprinc" src="../webroot/css/images/flechaatras.png" alt="Atrás" title="Atrás"/>
             </a>
             <h1 id="titulo">Mantenimiento de Departamentos</h1>
