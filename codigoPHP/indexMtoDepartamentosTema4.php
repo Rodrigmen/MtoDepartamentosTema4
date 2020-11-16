@@ -9,7 +9,7 @@
     </head>
     <body>
         <header>
-            <a href="../indexProyectoTema4.php">
+            <a href="../../indexProyectoTema4.php">
                 <img class="imgprinc" src="../webroot/css/images/flechaatras.png" alt="Atrás" title="Atrás"/>
             </a>
             <h1 id="titulo">Mantenimiento de Departamentos</h1>
@@ -23,7 +23,7 @@
          * @since 29-10-2020
          * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
          */
-        require_once '../config/confDBPDO.php';
+        require_once '../config/confDBPDOCasa.php';
 
         try {
             $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
