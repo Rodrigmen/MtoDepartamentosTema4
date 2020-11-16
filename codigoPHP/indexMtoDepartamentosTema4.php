@@ -4,13 +4,13 @@
         <title>MtoDepartamentosTema4 - DWES</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="webroot/css/styleMtoDepartamentosTema4.css" rel="stylesheet" type="text/css"/>
-        <link rel="icon" type="image/jpg" href="webroot/css/images/favicon.jpg"/>
+        <link href="../webroot/css/styleMtoDepartamentosTema4.css" rel="stylesheet" type="text/css"/>
+        <link rel="icon" type="image/jpg" href="../webroot/css/images/favicon.jpg"/>
     </head>
     <body>
         <header>
             <a href="../indexProyectoTema4.php">
-                <img class="imgprinc" src="webroot/css/images/flechaatras.png" alt="Atrás" title="Atrás"/>
+                <img class="imgprinc" src="../webroot/css/images/flechaatras.png" alt="Atrás" title="Atrás"/>
             </a>
             <h1 id="titulo">Mantenimiento de Departamentos</h1>
         </header>
@@ -135,17 +135,17 @@
                         ?>
                     <td>
                         <a href="#">
-                            <img class="imgejer" src="webroot/css/images/editar.png"  alt="Editar" title="Editar"/>
+                            <img class="imgejer" src="../webroot/css/images/editar.png"  alt="Editar" title="Editar"/>
                         </a>
                     </td>
                     <td>
                         <a href="options/consultar.php">
-                            <img class="imgejer" src="webroot/css/images/analitica.png"alt="Ver datos" title="Ver datos"/>
+                            <img class="imgejer" src="../webroot/css/images/analitica.png"alt="Ver datos" title="Ver datos"/>
                         </a>
                     </td>
                     <td>
                         <a href="#">
-                            <img class="imgejer" src="webroot/css/images/eliminar.png"alt="Eliminar" title="Eliminar"/>
+                            <img class="imgejer" src="../webroot/css/images/eliminar.png"alt="Eliminar" title="Eliminar"/>
                         </a>
                     </td>
                     <?php
@@ -180,29 +180,33 @@
                 . "</thead>"
                 . "<tbody>";
                 while ($departamento = $seleccionTodosDep->fetch(PDO::FETCH_OBJ)) {
+                    $codigoDep = $departamento->CodDepartamento;
+                    $descDep = $departamento->DescDepartamento;
+                    $volDep = $departamento->VolumenNegocio;
+                    $fechaDep = $departamento->FechaBaja;
                     echo "<tr>"
-                    . "<td>$departamento->CodDepartamento</td>"
-                    . "<td> $departamento->DescDepartamento</td>"
-                    . "<td> $departamento->VolumenNegocio</td>";
-                    if (is_null($departamento->FechaBaja)) {
+                    . "<td>$codigoDep</td>"
+                    . "<td>$descDep</td>"
+                    . "<td>$volDep</td>";
+                    if (is_null($fechaDep)) {
                         echo "<td>Activo</td>";
                     } else {
-                        echo "<td> $departamento->FechaBaja</td>";
+                        echo "<td>$fechaDep</td>";
                     }
                     ?>
                     <td>
                         <a href="#">
-                            <img class="imgejer" src="webroot/css/images/editar.png"  alt="Editar" title="Editar"/>
+                            <img class="imgejer" src="../webroot/css/images/editar.png"  alt="Editar" title="Editar"/>
                         </a>
                     </td>
                     <td>
-                        <a href="options/consultar.php">
-                            <img class="imgejer" src="webroot/css/images/analitica.png"alt="Ver datos" title="Ver datos"/>
+                        <a href="consultar.php?codigoDep=<?php echo $codigoDep ?>&descDep=<?php echo $descDep ?>&volDep=<?php echo $volDep ?>&fechaDep=<?php echo $fechaDep ?>">
+                            <img class="imgejer" src="../webroot/css/images/analitica.png"alt="Ver datos" title="Ver datos"/>
                         </a>
                     </td>
                     <td>
                         <a href="#">
-                            <img class="imgejer" src="webroot/css/images/eliminar.png"alt="Eliminar" title="Eliminar"/>
+                            <img class="imgejer" src="../webroot/css/images/eliminar.png"alt="Eliminar" title="Eliminar"/>
                         </a>
                     </td>
                     <?php
@@ -231,7 +235,7 @@
         <li>&copy2020-2021 | Rodrigo Robles Miñambres</li>
         <li>
             <a target="_blank" href="https://github.com/Rodrigmen/MtoDepartamentosTema4/tree/developer">
-                <img class="imgprinc" title="GitHub" src="webroot/css/images/github.png"  alt="GITHUB">
+                <img class="imgprinc" title="GitHub" src="../webroot/css/images/github.png"  alt="GITHUB">
             </a>
         </li>
     </ul>            
