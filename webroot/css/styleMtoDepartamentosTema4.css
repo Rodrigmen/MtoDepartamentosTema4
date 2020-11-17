@@ -28,6 +28,9 @@ header img{
     transition: 0.5s;
 
 }
+#casa{
+    float:right;
+}
 .imgprinc:hover{
     filter: drop-shadow(0 2px 5px white);
 
@@ -75,22 +78,31 @@ input:placeholder-shown {
     background-color: #FAFBFC;
 }
 
-form input[type="submit"]{
+form input[type="button"]{
+    text-decoration: underline white; 
     width:100%;
-    padding:8px 16px;
-    margin-top:32px;
-    border:1px solid #000;
+    height: 30px;
+    margin-top:20px;
     border-radius:5px;
     display:block;
     color:#fff;
     background-color:#000;
+    border:none;
 } 
-form input[type="submit"]:hover{
-	cursor:pointer;
-        color:black;
-        background: white;
-}
 
+form input[type="button"]:hover{
+    cursor:pointer;
+    color:black;
+    background: white;
+}
+form input[name="Insertar Departemento"]{
+    text-decoration: underline green; 
+}
+form input[name="Insertar Departemento"]:hover{
+    cursor:pointer;
+    background-color: green;
+    color:white;
+}
 .errores{
     color:red;
     float:right;
@@ -134,6 +146,9 @@ th{
 thead{
     background: white;
 }
+thead tr:hover{
+    background: white;
+}
 tr:hover{
     background: linear-gradient(to right, white 0%, 
         rgba(169,198,255,0.69) 22%, rgba(169,198,255,0.11) 64%);
@@ -150,7 +165,7 @@ td:first-child{
     width: 10%;
 }
 td:nth-child(n+2){
-     text-align: justify;
+    text-align: justify;
 }
 
 
@@ -159,7 +174,7 @@ td:nth-child(n+3){
     width: 10%;
 }
 td:nth-child(n+5){
-     width: 3%;
+    width: 3%;
 }
 td:nth-child(n+5):hover {
     border-bottom-color: white; 
@@ -173,30 +188,30 @@ td:nth-child(n+5):hover {
 }
 
 /*-----------FOOTER-----------*/
-    footer{
-      background: #A9C6FF;
-      color: black;
-      position: fixed;
-      height: 50px;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      text-align: center;
-    }
-    
-    footer ul li{
-        display:inline;
-        list-style: none;
-        padding-left:3px;
-        padding-right:3px;
-    }
-    
-    footer ul li #imggit{
-         width:40px;
-         height:40px;
-         transition: 0.5s;
-    }
-    
-    footer ul li #imggit:hover{
-        filter: drop-shadow(0 2px 5px white);
-    }
+footer{
+    background: #A9C6FF;
+    color: black;
+    position: fixed;
+    height: 50px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+footer ul li{
+    display:inline;
+    list-style: none;
+    padding-left:3px;
+    padding-right:3px;
+}
+
+footer ul li #imggit{
+    width:40px;
+    height:40px;
+    transition: 0.5s;
+}
+
+footer ul li #imggit:hover{
+    filter: drop-shadow(0 2px 5px white);
+}

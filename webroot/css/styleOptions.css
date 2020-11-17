@@ -45,7 +45,7 @@ form input[type="text"]{
 }
 
 
-form input[type="button"]{
+form input[type="button"], form input[type="submit"]{
     width:100%;
     padding:8px 16px;
     margin-top:32px;
@@ -56,19 +56,19 @@ form input[type="button"]{
     background-color:#000;
 } 
 
-form input[type="button"]:hover{
+form input[name="eliminar"]{
+    background-color:red;
+}
+form input[name="editar"]{
+    background-color:blue;
+}
+form input[value="Insertar"]{
+    background-color:green;
+}
+form input[type="button"]:hover, form input[type="submit"]:hover{
     cursor:pointer;
     color:black;
     background: white;
-}
-input[type="radio"]:checked + label{
-    color:#008508;
-    text-decoration: underline;
-}
-
-input[type="checkbox"]:checked + label{
-    color:#008508;
-    text-decoration: underline;
 }
 
 .errores{
@@ -99,6 +99,6 @@ input[type="checkbox"]:checked + label{
     color:#008508;
 }
 
-input{
+input:read-only{
     background-color: #EEEDD3;
 }
