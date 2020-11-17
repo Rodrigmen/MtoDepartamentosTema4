@@ -67,7 +67,7 @@
 
 
                 //DESCRIPCIÓN (input type="text") [OBLIGATORIO {texto alfabetico}] 
-                $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfabetico($_POST['descripcion'], 35, 1, REQUIRED);
+                $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfaNumerico($_POST['descripcion'], 35, 1, REQUIRED);
                 //VOLUMEN DE NEGOCIO (input type="number") [OBLIGATORIO {número entero}] 
                 $aErrores['eVolumen'] = validacionFormularios::comprobarEntero($_POST['volumen'], PHP_INT_MAX, 1, REQUIRED);
 
@@ -97,45 +97,11 @@
                 $insertarDepartamento->bindParam(':volumen', $_POST['volumen']);
 
                 //Se ejecuta la consulta preparada
-                if ($insertarDepartamento->execute()) {
-                    //Tras ejercutarse la consulta, mostramos todos los departamentos de la base de datos e indicamos el nuevo
-                    echo '<h2>¡Se ha insertado  <span style="color:green;">' . strtoupper($_POST['codigo']) . ' </span>!</h2>';
+                $insertarDepartamento->execute();
 
-                    //Preparamos la consulta
-                    $consultaTodos = "SELECT * FROM Departamento ORDER BY CodDepartamento";
-                    $seleccionTodosDep = $oConexionPDO->prepare($consultaTodos);
+                header('Location: MtoDepartamentos.php'); //redireccionamiento a la página principal
 
-                    //Ejecutamos la consulta
-                    $seleccionTodosDep->execute();
-
-                    $numeroDepartamentos = $seleccionTodosDep->rowCount();
-
-
-                    echo "<table>"
-                    . "<tr>"
-                    . "<th>Código</th>"
-                    . "<th>Descripción</th>"
-                    . "<th>Volumen de negocio</th>"
-                    . "<th>Fecha de baja</th>"
-                    . "</tr>";
-                    while ($departamento = $seleccionTodosDep->fetch(PDO::FETCH_OBJ)) { //convertimos a objetos todos los departamentos, y mientras no sean nulos, se recorren
-                        echo "<tr>"
-                        . "<td>$departamento->CodDepartamento</td>"
-                        . "<td> $departamento->DescDepartamento</td>"
-                        . "<td> $departamento->VolumenNegocio</td>"
-                        . "<td> $departamento->FechaBaja</td>"
-                        . "</tr>";
-                    }
-
-                    echo "</table>";
-
-
-                    echo "<h4>Número de registros (departamentos): $numeroDepartamentos </h4>";
-                } else {
-                    echo '<h2>¡No se ha insertado  <span style="color:red;">' . $aFormulario['fCodigo'] . ' </span>!</h2>';
-                }
                 $insertarDepartamento->closeCursor();
-                $seleccionTodosDep->closeCursor();
             } else { // si el formulario no esta correctamente rellenado (campos vacios o valores introducidos incorrectos) o no se ha rellenado nunca
                 //formulario
                 ?>

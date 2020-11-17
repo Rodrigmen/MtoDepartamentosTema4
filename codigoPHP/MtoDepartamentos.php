@@ -77,7 +77,7 @@
                         }
                         ?>
                     </div>         
-                    <a href="insertar.php"> <input type="button" name="Insertar Departemento" value="Insertar Departemento"></a>
+                    <a href="altaDepartamento.php"> <input type="button" name="Insertar Departemento" value="Insertar Departemento"></a>
                     <a href="mostrarCodigo.php"> <input type="button" name="Ver Código" value="Ver código"></a>
                 </fieldset>
             </form>
@@ -144,17 +144,17 @@
                         }
                         ?>
                     <td>
-                        <a href="editar.php?codigoDep=<?php echo $codigoDep ?>">
+                        <a href="editarDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/editar.png"  alt="Editar" title="Editar"/>
                         </a>
                     </td>
                     <td>
-                        <a href="consultar.php?codigoDep=<?php echo $codigoDep ?>">
+                        <a href="mostrarDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/analitica.png"alt="Ver datos" title="Ver datos"/>
                         </a>
                     </td>
                     <td>
-                        <a href="eliminar.php?codigoDep=<?php echo $codigoDep ?>">
+                        <a href="bajaDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/eliminar.png"alt="Eliminar" title="Eliminar"/>
                         </a>
                     </td>
@@ -205,17 +205,17 @@
                     }
                     ?>
                     <td>
-                        <a href="editar.php?codigoDep=<?php echo $codigoDep ?>">
+                        <a href="editarDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/editar.png"  alt="Editar" title="Editar"/>
                         </a>
                     </td>
                     <td>
-                        <a href="consultar.php?codigoDep=<?php echo $codigoDep ?>">
+                        <a href="mostrarDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/analitica.png"alt="Ver datos" title="Ver datos"/>
                         </a>
                     </td>
                     <td>
-                        <a href="eliminar.php?codigoDep=<?php echo $codigoDep ?>">
+                        <a href="bajaDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/eliminar.png"alt="Eliminar" title="Eliminar"/>
                         </a>
                     </td>

@@ -31,7 +31,7 @@
             if (isset($_POST['editar'])) {
 
                 //DESCRIPCIÓN (input type="text") [OBLIGATORIO {texto alfabetico}] 
-                $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfabetico($_POST['descripcion'], 35, 1, OPTIONAL);
+                $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfaNumerico($_POST['descripcion'], 35, 1, REQUIRED);
                 //VOLUMEN DE NEGOCIO (input type="number") [OBLIGATORIO {número entero}] 
                 $aErrores['eVolumen'] = validacionFormularios::comprobarEntero($_POST['volumen'], PHP_INT_MAX, 1, OPTIONAL);
 
@@ -57,7 +57,7 @@
                 //Ejecución
                 $actualizarDepartamento->execute();
 
-                header('Location: indexMtoDepartamentosTema4.php');
+                header('Location: MtoDepartamentos.php'); //redireccionamiento a la página principal
             } else {
 
                 $consultaBuscar = "SELECT * FROM Departamento WHERE CodDepartamento LIKE :codigo";
@@ -78,21 +78,30 @@
                 ?>
                 <form id="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <fieldset>
-                        <legend>Eliminar Departamento</legend>
+                        <legend>Editar Departamento</legend>
 
                         <div class="required">
                             <label for="codigo">Código:</label>
-                            <input type="text" name="codigo" value="<?php echo $_GET["codigoDep"] ?>" readonly/>
+                            <input type="text" name="codigo" value="<?php
+                            if (is_null($_GET["codigoDep"])) {
+                                echo $_POST['codigo'];
+                            } else {
+                                echo $_GET["codigoDep"];
+                            }
+                            ?>" readonly/>
                         </div>
+                        <!-----------------DESCRIPCIÓN----------------->
                         <div class="optional">
-                            <label for="descripcion">Descripción:</label>
-                            <input type="text" name="descripcion" value="<?php
-                            //si no hay error y se ha insertado un valor en el campo con anterioridad
-                            if ($aErrores['eDescripcion'] == null && isset($_POST['descripcion'])) {
+                            <label for="codigo">Descripción: </label>
+                            <input type="text" name="descripcion" placeholder="Departamento de..." value="<?php
+                            if (is_null($descDep)) {
+                                //si no hay error y se ha insertado un valor en el campo con anterioridad
+                                if ($aErrores['eDescripcion'] == null && isset($_POST['descripcion'])) {
 
-                                //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
-                                //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
-                                echo $_POST['descripcion'];
+                                    //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
+                                    //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
+                                    echo $_POST['descripcion'];
+                                }
                             } else {
                                 echo $descDep;
                             }
@@ -108,15 +117,18 @@
                             }
                             ?>
                         </div>
+                        <!-----------------VOLUMEN DE NEGOCIO----------------->
                         <div class="optional">
                             <label for="volumen">Volumen:</label>
-                            <input type="text" name="volumen"  value="<?php
-                            //si no hay error y se ha insertado un valor en el campo con anterioridad
-                            if ($aErrores['eVolumen'] == null && isset($_POST['volumen'])) {
+                            <input type="number" name="volumen"  value="<?php
+                            if (is_null($volDep)) {
+                                //si no hay error y se ha insertado un valor en el campo con anterioridad
+                                if ($aErrores['eVolumen'] == null && isset($_POST['volumen'])) {
 
-                                //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
-                                //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
-                                echo $_POST['volumen'];
+                                    //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
+                                    //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
+                                    echo $_POST['volumen'];
+                                }
                             } else {
                                 echo $volDep;
                             }
@@ -151,7 +163,7 @@
                 }
                 ?>
                 <input type="submit" name="editar" value="Actualizar"/>
-                <a class="botones" href="indexMtoDepartamentosTema4.php"> <input type="button" name="cancelar" value="Cancelar"></a>           
+                <a class="botones" href="MtoDepartamentos.php"> <input type="button" name="cancelar" value="Cancelar"></a>           
             </fieldset>
         </form>
     </body>

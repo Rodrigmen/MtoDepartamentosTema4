@@ -25,7 +25,7 @@
                 //Ejecución
                 $borrarDepartamento->execute();
                 
-                header('Location: indexMtoDepartamentosTema4.php');
+                header('Location: MtoDepartamentos.php'); //redireccionamiento a la página principal
             } else {
 
                 $consultaBuscar = "SELECT * FROM Departamento WHERE CodDepartamento LIKE :codigo";
