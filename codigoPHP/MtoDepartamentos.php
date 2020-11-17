@@ -12,7 +12,11 @@
             <a href="../../indexProyectoTema4.php">
                 <img class="imgprinc" src="../webroot/css/images/flechaatras.png" alt="Atrás" title="Atrás"/>
             </a>
+            <a href="../../../../index.html">
+                <img class="imgprinc" id="casa" src="../webroot/css/images/inicio.png" alt="Página Principal" title="Página Principal"/>
+            </a>
             <h1 id="titulo">Mantenimiento de Departamentos</h1>
+
         </header>
 
         <?php
@@ -23,7 +27,7 @@
          * @since 29-10-2020
          * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
          */
-        require_once '../config/confDBPDOCasa.php';
+        require_once '../config/confDBPDO.php';
 
         try {
             $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
@@ -61,7 +65,7 @@
                             //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
                             echo $_POST['descripcion'];
                         }
-                        ?>"/>
+                        ?>"/><input type="submit" name="buscar" value="Buscar" />
 
                         <?php
                         //si hay error en este campo
@@ -72,15 +76,17 @@
                             '</div>';
                         }
                         ?>
-                    </div>
-                    <input type="submit" name="buscar" value="Buscar" />
+                    </div>         
+                    <a href="insertar.php"> <input type="button" name="Insertar Departemento" value="Insertar Departemento"></a>
+                    <a href="mostrarCodigo.php"> <input type="button" name="Ver Código" value="Ver código"></a>
                 </fieldset>
             </form>
+
             <?php
             if (isset($_POST['buscar'])) { //si se pulsa 'enviar' (input name="enviar")
                 //Validación de los campos (el resultado de la validación se mete en el array aErrores para comprobar posteriormente si da error)
                 //DESCRIPCIÓN (input type="text") [OBLIGATORIO {texto alfabetico}] 
-                $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfabetico($_POST['descripcion'], 35, 1, OPTIONAL);
+                $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfaNumerico($_POST['descripcion'], 35, 1, OPTIONAL);
 
 
 
@@ -123,28 +129,32 @@
                     . "</thead>"
                     . "<tbody>";
                     while ($departamento = $buscarDepartamento->fetch(PDO::FETCH_OBJ)) {
+                        $codigoDep = $departamento->CodDepartamento;
+                        $descDep = $departamento->DescDepartamento;
+                        $volDep = $departamento->VolumenNegocio;
+                        $fechaDep = $departamento->FechaBaja;
                         echo "<tr>"
-                        . "<td>$departamento->CodDepartamento</td>"
-                        . "<td> $departamento->DescDepartamento</td>"
-                        . "<td> $departamento->VolumenNegocio</td>";
-                        if (is_null($departamento->FechaBaja)) {
+                        . "<td>$codigoDep</td>"
+                        . "<td>$descDep</td>"
+                        . "<td>$volDep</td>";
+                        if (is_null($fechaDep)) {
                             echo "<td>Activo</td>";
                         } else {
-                            echo "<td> $departamento->FechaBaja</td>";
+                            echo "<td>$fechaDep</td>";
                         }
                         ?>
                     <td>
-                        <a href="#">
+                        <a href="editar.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/editar.png"  alt="Editar" title="Editar"/>
                         </a>
                     </td>
                     <td>
-                        <a href="options/consultar.php">
+                        <a href="consultar.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/analitica.png"alt="Ver datos" title="Ver datos"/>
                         </a>
                     </td>
                     <td>
-                        <a href="#">
+                        <a href="eliminar.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/eliminar.png"alt="Eliminar" title="Eliminar"/>
                         </a>
                     </td>
@@ -195,17 +205,17 @@
                     }
                     ?>
                     <td>
-                        <a href="#">
+                        <a href="editar.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/editar.png"  alt="Editar" title="Editar"/>
                         </a>
                     </td>
                     <td>
-                        <a href="consultar.php?codigoDep=<?php echo $codigoDep ?>&descDep=<?php echo $descDep ?>&volDep=<?php echo $volDep ?>&fechaDep=<?php echo $fechaDep ?>">
+                        <a href="consultar.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/analitica.png"alt="Ver datos" title="Ver datos"/>
                         </a>
                     </td>
                     <td>
-                        <a href="#">
+                        <a href="eliminar.php?codigoDep=<?php echo $codigoDep ?>">
                             <img class="imgejer" src="../webroot/css/images/eliminar.png"alt="Eliminar" title="Eliminar"/>
                         </a>
                     </td>
