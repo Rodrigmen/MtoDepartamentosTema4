@@ -61,7 +61,7 @@
                             <input type="text" name="volumen"  value="<?php echo $volDep ?>" readonly/>
                         </div>
                         <?php
-                        if ($fechaDep != "") {
+                        if (!empty($fechaDep)) {
                             ?>
                             <div class="required">
                                 <label for="nombre">Fecha de Baja:</label>

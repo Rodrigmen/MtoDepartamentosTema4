@@ -16,6 +16,23 @@
             $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
             $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             require_once '../core/201020libreriaValidacion.php';
+
+            /* SACAR A TRAVÉS DE UNA CONSULTA */
+            $consultaBuscar = "SELECT * FROM Departamento WHERE CodDepartamento LIKE :codigo";
+
+            $buscarDepartamento = $oConexionPDO->prepare($consultaBuscar);
+
+            //Inserción de datos en al consulta
+            $buscarDepartamento->bindParam(':codigo', $_GET["codigoDep"]);
+
+            //Ejecución
+            $buscarDepartamento->execute();
+
+            while ($departamento = $buscarDepartamento->fetch(PDO::FETCH_OBJ)) {
+                $descDep = $departamento->DescDepartamento;
+                $volDep = $departamento->VolumenNegocio;
+                $fechaDep = $departamento->FechaBaja;
+            }
             //Creamos una variable boleana para definir cuando esta bien o mal rellenado el formulario
             $entradaOK = true;
 
@@ -59,76 +76,51 @@
 
                 header('Location: MtoDepartamentos.php'); //redireccionamiento a la página principal
             } else {
-
-                $consultaBuscar = "SELECT * FROM Departamento WHERE CodDepartamento LIKE :codigo";
-
-                $buscarDepartamento = $oConexionPDO->prepare($consultaBuscar);
-
-                //Inserción de datos en al consulta
-                $buscarDepartamento->bindParam(':codigo', $_GET["codigoDep"]);
-
-                //Ejecución
-                $buscarDepartamento->execute();
-
-                while ($departamento = $buscarDepartamento->fetch(PDO::FETCH_OBJ)) {
-                    $descDep = $departamento->DescDepartamento;
-                    $volDep = $departamento->VolumenNegocio;
-                    $fechaDep = $departamento->FechaBaja;
-                }
+                //A TRAVÉS DEL ACTION SE VUELVE A PASAR EL GET CON EL CODIGO, HACIENDO LA CONSULTA DE NUEVO
                 ?>
-                <form id="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <form id="formulario" action="<?php echo $_SERVER['PHP_SELF'] . '?codigoDep=' . $_GET['codigoDep']; ?>" method="post"> 
                     <fieldset>
                         <legend>Editar Departamento</legend>
 
                         <div class="required">
                             <label for="codigo">Código:</label>
                             <input type="text" name="codigo" value="<?php
-                            if (is_null($_GET["codigoDep"])) {
-                                echo $_POST['codigo'];
-                            } else {
-                                echo $_GET["codigoDep"];
-                            }
+                            echo $_GET["codigoDep"];
                             ?>" readonly/>
                         </div>
                         <!-----------------DESCRIPCIÓN----------------->
                         <div class="optional">
                             <label for="codigo">Descripción: </label>
                             <input type="text" name="descripcion" placeholder="Departamento de..." value="<?php
-                            if (is_null($descDep)) {
-                                //si no hay error y se ha insertado un valor en el campo con anterioridad
-                                if ($aErrores['eDescripcion'] == null && isset($_POST['descripcion'])) {
+                            //si no hay error y se ha insertado un valor en el campo con anterioridad
+                            if ($aErrores['eDescripcion'] == null && isset($_POST['descripcion'])) {
 
-                                    //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
-                                    //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
-                                    echo $_POST['descripcion'];
-                                }
+                                //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
+                                //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
+                                echo $_POST['descripcion'];
                             } else {
                                 echo $descDep;
                             }
                             ?>"/>
-
-                            <?php
-                            //si hay error en este campo
-                            if ($aErrores['eDescripcion'] != NULL) {
-                                echo "<div class='errores'>" .
-                                //se muestra dicho error
-                                $aErrores['eDescripcion'] .
-                                '</div>';
-                            }
-                            ?>
+                                   <?php
+                                   //si hay error en este campo
+                                   if ($aErrores['eDescripcion'] != NULL) {
+                                       echo "<div class='errores'>" .
+                                       //se muestra dicho error
+                                       $aErrores['eDescripcion'] .
+                                       '</div>';
+                                   }
+                                   ?>
                         </div>
                         <!-----------------VOLUMEN DE NEGOCIO----------------->
                         <div class="optional">
                             <label for="volumen">Volumen:</label>
                             <input type="number" name="volumen"  value="<?php
-                            if (is_null($volDep)) {
-                                //si no hay error y se ha insertado un valor en el campo con anterioridad
-                                if ($aErrores['eVolumen'] == null && isset($_POST['volumen'])) {
-
-                                    //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
-                                    //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
-                                    echo $_POST['volumen'];
-                                }
+                            //si no hay error y se ha insertado un valor en el campo con anterioridad
+                            if ($aErrores['eVolumen'] == null && isset($_POST['volumen'])) {
+                                //se muestra dicho valor (el campo no aparece vacío si se relleno correctamente 
+                                //[en el caso de que haya que se recarge el formulario por un campo mal rellenado, asi no hay que rellenarlo desde 0])
+                                echo $_POST['volumen'];
                             } else {
                                 echo $volDep;
                             }
@@ -145,11 +137,13 @@
                             ?>
                         </div>
                         <?php
-                        if ($fechaDep != "") {
+                        if (!empty($fechaDep)) {
                             ?>
                             <div class="required">
                                 <label for="nombre">Fecha de Baja:</label>
-                                <input type="text" name="fecha"  value="<?php echo $fechaDep ?>" readonly/>
+                                <input type="text" name="fecha"  value="<?php
+                                echo $fechaDep;
+                                ?>" readonly/>
                             </div>
                             <?php
                         }
