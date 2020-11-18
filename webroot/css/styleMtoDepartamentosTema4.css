@@ -77,8 +77,12 @@ input:focus {
 input:placeholder-shown {
     background-color: #FAFBFC;
 }
-
-form input[type="button"]{
+form input[name="importar"], form input[name="exportar"] {
+    padding:3px 10px;
+    margin:20px 10px;
+    float:right;
+} 
+form input[name="Insertar Departemento"], form input[name="Ver Código"] {
     text-decoration: underline white; 
     width:100%;
     height: 30px;

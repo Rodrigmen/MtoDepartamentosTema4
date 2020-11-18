@@ -40,8 +40,14 @@
                     <!-----------------DESCRIPCIÓN----------------->
                     <div class="required">
                         <label for="codigo">Descripción: </label>
-                        <input type="search" name="descripcion" placeholder="Departamento de..." value="<?php if (isset($_POST['descripcion'])) {echo $_POST['descripcion'];} ?>"/>
+                        <input type="search" name="descripcion" placeholder="Departamento de..." value="<?php
+                        if (isset($_POST['descripcion'])) {
+                            echo $_POST['descripcion'];
+                        }
+                        ?>"/>
                         <input type="submit" name="buscar" value="Buscar" />
+                        <a href="#"> <input type="button" name="exportar" value="Exportar"></a>
+                        <a href="#"> <input type="button" name="importar" value="Importar"></a>
                     </div>         
                     <a href="altaDepartamento.php"> <input type="button" name="Insertar Departemento" value="Insertar Departemento"></a>
                     <a href="mostrarCodigo.php"> <input type="button" name="Ver Código" value="Ver código"></a>
@@ -84,15 +90,22 @@
                     $descDep = $departamento->DescDepartamento;
                     $volDep = $departamento->VolumenNegocio;
                     $fechaDep = $departamento->FechaBaja;
-                    echo "<tr>"
-                    . "<td>$codigoDep</td>"
+                    if (!is_null($fechaDep)) {
+                        $habilitado = false;
+                    }
+
+                    if ($habilitado === false) {
+                        echo "<tr style='background-color:red;'>";
+                    } else {
+                        echo "<tr>";
+                    }
+                    echo "<td>$codigoDep</td>"
                     . "<td>$descDep</td>"
                     . "<td>$volDep</td>";
                     if (is_null($fechaDep)) {
                         echo "<td>Activo</td>";
                     } else {
                         echo "<td>$fechaDep</td>";
-                        $habilitado = false;
                     }
                     ?>
                 <td>

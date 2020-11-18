@@ -44,7 +44,6 @@ form input[type="text"]{
 
 }
 
-
 form input[type="button"], form input[type="submit"]{
     width:100%;
     padding:8px 16px;
@@ -56,10 +55,10 @@ form input[type="button"], form input[type="submit"]{
     background-color:#000;
 } 
 
-form input[name="eliminar"],  form input[name="inhabilitar"]{
+form input[name="eliminar"], form input[name="inhabilitar"]{
     background-color:red;
 }
-form input[name="editar"]{
+form input[name="editar"], form input[name="rehabilitar"]{
     background-color:blue;
 }
 form input[value="Insertar"]{

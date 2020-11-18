@@ -39,6 +39,14 @@
         $filename5 = "mostrarDepartamento.php";
         highlight_file($filename5);
         
+        echo '<h1>bajaLogicaDepartamento [Desactiva un departamento a una determinada fecha]</h1>';
+        $filename6 = "bajaLogicaDepartamento.php";
+        highlight_file($filename6);
+        
+        echo '<h1>rehabilitarDepartamento [Reactiva un departamento]</h1>';
+        $filename7 = "rehabilitarDepartamento.php";
+        highlight_file($filename7);
+        
         ?>
 
     </body>
