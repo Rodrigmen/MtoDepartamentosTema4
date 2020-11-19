@@ -9,7 +9,7 @@
     </head>
     <body>
         <?php
-        require_once '../config/confDBPDO.php';
+        require_once '../config/confDBPDOOne.php';
 
         try {
             $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php

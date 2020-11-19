@@ -9,7 +9,7 @@
     </head>
     <body>
         <?php
-        require_once '../config/confDBPDO.php';
+        require_once '../config/confDBPDOOne.php';
 
         try {
 
