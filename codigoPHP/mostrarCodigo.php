@@ -47,6 +47,22 @@
         $filename7 = "rehabilitarDepartamento.php";
         highlight_file($filename7);
         
+        echo '<h1>exportarDepartamentosXML [Exportas los datos de la tabla Departamento a local en formato XML]</h1>';
+        $filename8 = "exportarDepartamentosXML.php";
+        highlight_file($filename8);
+        
+        echo '<h1>importarDepartamentosXML [Importas los datos de la tabla Departamento desde el directorio /tmp en formato XML]</h1>';
+        $filename9 = "importarDepartamentosXML.php";
+        highlight_file($filename9);
+        
+        echo '<h1>exportarDepartamentosJSON [Exportas los datos de la tabla Departamento a local en formato JSON]</h1>';
+        $filename10 = "exportarDepartamentosJSON.php";
+        highlight_file($filename10);
+        
+        echo '<h1>importarDepartamentosJSON [Importas los datos de la tabla Departamento desde el directorio /tmp en formato JSON]</h1>';
+        $filename11 = "importarDepartamentosJSON.php";
+        highlight_file($filename11);
+        
         ?>
 
     </body>

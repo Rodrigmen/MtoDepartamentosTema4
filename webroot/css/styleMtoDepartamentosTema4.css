@@ -86,12 +86,13 @@ form input[name="Insertar Departemento"], form input[name="Ver Código"] {
     text-decoration: underline white; 
     width:100%;
     height: 30px;
-    margin-top:20px;
+    margin-top:10px;
     border-radius:5px;
     display:block;
     color:#fff;
     background-color:#000;
     border:none;
+    margin-bottom: 5px;
 } 
 
 form input[type="button"]:hover{
@@ -168,17 +169,15 @@ td{
 td:first-child{
     width: 10%;
 }
+
 td:nth-child(n+2){
     text-align: justify;
 }
-
-
-
 td:nth-child(n+3){
     width: 10%;
 }
 td:nth-child(n+5){
-    width: 3%;
+    width: 1%;
 }
 td:nth-child(n+5):hover {
     border-bottom-color: white; 

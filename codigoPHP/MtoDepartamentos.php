@@ -46,11 +46,24 @@
                         }
                         ?>"/>
                         <input type="submit" name="buscar" value="Buscar" />
-                        <a href="#"> <input type="button" name="exportar" value="Exportar"></a>
-                        <a href="#"> <input type="button" name="importar" value="Importar"></a>
-                    </div>         
+                    </div>     
                     <a href="altaDepartamento.php"> <input type="button" name="Insertar Departemento" value="Insertar Departemento"></a>
                     <a href="mostrarCodigo.php"> <input type="button" name="Ver Código" value="Ver código"></a>
+                    <label for="exportar">Exportar:</label>
+                        <select name="exportar"  onchange="location = this.value;">
+                            <option value=#>Elige una opción:</option>
+                            <option value="exportarDepartamentosXML.php">XML</option>
+                            <option value="exportarDepartamentosJSON.php">JSON</option>
+                            <option value="exportarDepartamentosCSV.php">CSV</option>
+                        </select>
+                        
+                        <label for="importar">Importar:</label>
+                        <select name="importar"  onchange="location = this.value;">
+                            <option value=#>Elige una opción:</option>
+                            <option value="importarDepartamentosXML.php">XML</option>
+                            <option value="importarDepartamentosJSON.php">JSON</option>
+                            <option value="importarDepartamentosCSV.php">CSV</option>
+                        </select>
                 </fieldset>
             </form>
 
@@ -95,7 +108,7 @@
                     }
 
                     if ($habilitado === false) {
-                        echo "<tr style='background-color:red;'>";
+                        echo "<tr style='background-color:#FA6D5C;'>";
                     } else {
                         echo "<tr>";
                     }
