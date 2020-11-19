@@ -24,7 +24,7 @@
 
                 //Ejecución
                 $borrarDepartamento->execute();
-                
+
                 header('Location: MtoDepartamentos.php'); //redireccionamiento a la página principal
             } else {
 
@@ -60,15 +60,12 @@
                             <label for="volumen">Volumen:</label>
                             <input type="text" name="volumen"  value="<?php echo $volDep ?>" readonly/>
                         </div>
+
+                        <div class="required">
+                            <label for="nombre">Fecha de Baja:</label>
+                            <input type="text" name="fecha"  value="<?php echo $fechaDep ?>" readonly/>
+                        </div>
                         <?php
-                        if (!empty($fechaDep)) {
-                            ?>
-                            <div class="required">
-                                <label for="nombre">Fecha de Baja:</label>
-                                <input type="text" name="fecha"  value="<?php echo $fechaDep ?>" readonly/>
-                            </div>
-                            <?php
-                        }
                     }
                 } catch (PDOException $excepcionPDO) {
                     echo "<p style='color:red;'>Mensaje de error: " . $excepcionPDO->getMessage() . "</p>"; //Muestra el mesaje de error

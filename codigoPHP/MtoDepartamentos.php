@@ -34,6 +34,7 @@
             $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //le damos este atributo a la conexión (la configuramos) para poder utilizar las excepciones
             //Requerimos una vez la libreria de validaciones
             require_once '../core/201020libreriaValidacion.php';
+            ;
             ?>
             <form id="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <fieldset>
@@ -50,20 +51,20 @@
                     <a href="altaDepartamento.php"> <input type="button" name="Insertar Departemento" value="Insertar Departemento"></a>
                     <a href="mostrarCodigo.php"> <input type="button" name="Ver Código" value="Ver código"></a>
                     <label for="exportar">Exportar:</label>
-                        <select name="exportar"  onchange="location = this.value;">
-                            <option value=#>Elige una opción:</option>
-                            <option value="exportarDepartamentosXML.php">XML</option>
-                            <option value="exportarDepartamentosJSON.php">JSON</option>
-                            <option value="exportarDepartamentosCSV.php">CSV</option>
-                        </select>
-                        
-                        <label for="importar">Importar:</label>
-                        <select name="importar"  onchange="location = this.value;">
-                            <option value=#>Elige una opción:</option>
-                            <option value="importarDepartamentosXML.php">XML</option>
-                            <option value="importarDepartamentosJSON.php">JSON</option>
-                            <option value="importarDepartamentosCSV.php">CSV</option>
-                        </select>
+                    <select name="exportar"  onchange="location = this.value;">
+                        <option value="#">Elige una opción:</option>
+                        <option value="exportarDepartamentosXML.php">XML</option>
+                        <option value="exportarDepartamentosJSON.php">JSON</option>
+                        <option value="exportarDepartamentosCSV.php">CSV</option>
+                    </select>
+
+                    <label for="importar">Importar:</label>
+                    <select name="importar"  onchange="location = this.value;">
+                        <option value=#>Elige una opción:</option>
+                        <option value="importarDepartamentosXML.php">XML</option>
+                        <option value="importarDepartamentosJSON.php">JSON</option>
+                        <option value="importarDepartamentosCSV.php">CSV</option>
+                    </select>
                 </fieldset>
             </form>
 
@@ -90,9 +91,13 @@
                 . "<thead>"
                 . "<tr>"
                 . "<th>Código</th>"
+                        ."<th> </th>"
                 . "<th>Descripción</th>"
+                        ."<th> </th>"
                 . "<th>Volumen de negocio</th>"
+                        ."<th> </th>"
                 . "<th>Fecha de baja</th>"
+                        ."<th> </th>"
                 . "<th>Opciones</th>"
                 . "</tr>"
                 . "</thead>"
@@ -114,12 +119,14 @@
                     }
                     echo "<td>$codigoDep</td>"
                     . "<td>$descDep</td>"
-                    . "<td>$volDep</td>";
+                    . "<td>$volDep</td>"
+                            . "<td>";
                     if (is_null($fechaDep)) {
-                        echo "<td>Activo</td>";
+                        echo " ";
                     } else {
-                        echo "<td>$fechaDep</td>";
+                       echo $fechaDep;
                     }
+                    echo "</td>";
                     ?>
                 <td>
                     <a href="editarDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
@@ -137,23 +144,23 @@
                     </a>
                 </td>
                 <?php
+                echo '<td>';
                 if ($habilitado) {
-                    echo '<td>';
+                    
                     ?>
                     <a href="bajaLogicaDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
                         <img class="imgejer" src="../webroot/css/images/habilitar.png"  alt="Inhabilitar" title="Inhabilitar"/>
                     </a>
                     <?php
-                    echo '</td>';
+                    
                 } else {
-                    echo '<td>';
                     ?>
                     <a href="rehabilitarDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
                         <img class="imgejer" src="../webroot/css/images/inhabilitar.png"  alt="HAbilitar" title="Habilitar"/>
                     </a>
                     <?php
-                    echo '</td>';
                 }
+                echo '</td>';
                 echo "</tr>";
             }
 

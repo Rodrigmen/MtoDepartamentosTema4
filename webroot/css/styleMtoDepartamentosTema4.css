@@ -143,10 +143,19 @@ tbody{
     height:350px;
 }
 
-th{
+th{  
     width: 20%;
-    padding: 25px;
+    padding: 1%;
+    padding-right: 20px;
     font-weight: bold;
+    text-align: center;
+    
+}
+th:nth-child(1){
+    width: 13%;
+}
+th:nth-child(2), th:nth-child(4), th:nth-child(6), th:nth-child(8) {
+   width: 0.01%; 
 }
 thead{
     background: white;
@@ -170,11 +179,9 @@ td:first-child{
     width: 10%;
 }
 
-td:nth-child(n+2){
-    text-align: justify;
-}
+
 td:nth-child(n+3){
-    width: 10%;
+    width: 15%;
 }
 td:nth-child(n+5){
     width: 1%;
