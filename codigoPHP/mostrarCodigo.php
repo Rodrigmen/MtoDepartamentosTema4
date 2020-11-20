@@ -63,6 +63,10 @@
         $filename11 = "importarDepartamentosJSON.php";
         highlight_file($filename11);
         
+        echo '<h1>Configuración 1&1</h1>';
+        $filename12 = "../config/confDBPDOOne.php";
+        highlight_file($filename12);
+        
         ?>
 
     </body>

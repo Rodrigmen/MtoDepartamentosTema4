@@ -1,83 +1,80 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>EditarDepartamento - MTO</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="../webroot/css/styleOptions.css" rel="stylesheet" type="text/css"/>
-        <link rel="icon" type="image/jpg" href="../webroot/css/images/favicon.jpg"/>
-    </head>
-    <body>
-        <?php
-        require_once '../config/confDBPDOOne.php';
+<?php
+try {
+    $oConexionPDO = new PDO('mysql:host=db5001094469.hosting-data.io;dbname=dbs939491', 'dbu1120028', 'Covid1234$', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
+    $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    require '../core/201020libreriaValidacion.php';
 
-        try {
+    /* SACAR A TRAVÉS DE UNA CONSULTA */
+    $consultaBuscar = "SELECT * FROM Departamento WHERE CodDepartamento LIKE :codigo";
 
-            $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
-            $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            require_once '../core/201020libreriaValidacion.php';
+    $buscarDepartamento = $oConexionPDO->prepare($consultaBuscar);
 
-            /* SACAR A TRAVÉS DE UNA CONSULTA */
-            $consultaBuscar = "SELECT * FROM Departamento WHERE CodDepartamento LIKE :codigo";
+    //Inserción de datos en al consulta
+    $buscarDepartamento->bindParam(':codigo', $_GET["codigoDep"]);
 
-            $buscarDepartamento = $oConexionPDO->prepare($consultaBuscar);
+    //Ejecución
+    $buscarDepartamento->execute();
 
-            //Inserción de datos en al consulta
-            $buscarDepartamento->bindParam(':codigo', $_GET["codigoDep"]);
+    while ($departamento = $buscarDepartamento->fetch(PDO::FETCH_OBJ)) {
+        $descDep = $departamento->DescDepartamento;
+        $volDep = $departamento->VolumenNegocio;
+        $fechaDep = $departamento->FechaBaja;
+    }
+    //Creamos una variable boleana para definir cuando esta bien o mal rellenado el formulario
+    $entradaOK = true;
 
-            //Ejecución
-            $buscarDepartamento->execute();
+    //Creamos dos constantes: 'REQUIRED' indica si un campo es obligatorio (tiene que tener algun valor); 'OPTIONAL' indica que un campo no es obligatorio
+    define('REQUIRED', 1);
+    define('OPTIONAL', 0);
 
-            while ($departamento = $buscarDepartamento->fetch(PDO::FETCH_OBJ)) {
-                $descDep = $departamento->DescDepartamento;
-                $volDep = $departamento->VolumenNegocio;
-                $fechaDep = $departamento->FechaBaja;
-            }
-            //Creamos una variable boleana para definir cuando esta bien o mal rellenado el formulario
-            $entradaOK = true;
+    //Array que contiene los posibles errores de los campos del formulario
+    $aErrores = [
+        'eDescripcion' => null,
+        'eVolumen' => null
+    ];
+    if (isset($_POST['editar'])) {
 
-            //Creamos dos constantes: 'REQUIRED' indica si un campo es obligatorio (tiene que tener algun valor); 'OPTIONAL' indica que un campo no es obligatorio
-            define('REQUIRED', 1);
-            define('OPTIONAL', 0);
+        //DESCRIPCIÓN (input type="text") [OBLIGATORIO {texto alfabetico}] 
+        $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfaNumerico($_POST['descripcion'], 35, 1, REQUIRED);
+        //VOLUMEN DE NEGOCIO (input type="number") [OBLIGATORIO {número entero}] 
+        $aErrores['eVolumen'] = validacionFormularios::comprobarEntero($_POST['volumen'], PHP_INT_MAX, 1, OPTIONAL);
 
-            //Array que contiene los posibles errores de los campos del formulario
-            $aErrores = [
-                'eDescripcion' => null,
-                'eVolumen' => null
-            ];
-            if (isset($_POST['editar'])) {
-
-                //DESCRIPCIÓN (input type="text") [OBLIGATORIO {texto alfabetico}] 
-                $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfaNumerico($_POST['descripcion'], 35, 1, REQUIRED);
-                //VOLUMEN DE NEGOCIO (input type="number") [OBLIGATORIO {número entero}] 
-                $aErrores['eVolumen'] = validacionFormularios::comprobarEntero($_POST['volumen'], PHP_INT_MAX, 1, OPTIONAL);
-
-                //recorremos el array de posibles errores (aErrores), si hay alguno, el campo se limpia y entradaOK es falsa (se vuelve a cargar el formulario)
-                foreach ($aErrores as $campo => $validacion) {
-                    if ($validacion != null) {
-                        $entradaOK = false;
-                    }
-                }
-            } else {
+        //recorremos el array de posibles errores (aErrores), si hay alguno, el campo se limpia y entradaOK es falsa (se vuelve a cargar el formulario)
+        foreach ($aErrores as $campo => $validacion) {
+            if ($validacion != null) {
                 $entradaOK = false;
             }
-            if ($entradaOK) {
+        }
+    } else {
+        $entradaOK = false;
+    }
+    if ($entradaOK) {
 
-                $consultaActualizar = "UPDATE Departamento SET DescDepartamento = :descripcion, VolumenNegocio = :volumen WHERE CodDepartamento LIKE :codigo";
+        $consultaActualizar = "UPDATE Departamento SET DescDepartamento = :descripcion, VolumenNegocio = :volumen WHERE CodDepartamento LIKE :codigo";
 
-                $actualizarDepartamento = $oConexionPDO->prepare($consultaActualizar);
-                //Inserción de datos en al consulta
-                $actualizarDepartamento->bindParam(':descripcion', $_POST["descripcion"]);
-                $actualizarDepartamento->bindParam(':volumen', $_POST["volumen"]);
-                $actualizarDepartamento->bindParam(':codigo', $_GET['codigoDep']);
+        $actualizarDepartamento = $oConexionPDO->prepare($consultaActualizar);
+        //Inserción de datos en al consulta
+        $actualizarDepartamento->bindParam(':descripcion', $_POST["descripcion"]);
+        $actualizarDepartamento->bindParam(':volumen', $_POST["volumen"]);
+        $actualizarDepartamento->bindParam(':codigo', $_GET['codigoDep']);
 
-                //Ejecución
-                $actualizarDepartamento->execute();
+        //Ejecución
+        $actualizarDepartamento->execute();
 
-                header('Location: MtoDepartamentos.php'); //redireccionamiento a la página principal
-            } else {
-                //A TRAVÉS DEL ACTION SE VUELVE A PASAR EL GET CON EL CODIGO, HACIENDO LA CONSULTA DE NUEVO
-                ?>
+        header('Location: https://daw218.ieslossauces.es/proyectoDWES/proyectoTema4/MtoDepartamentosTema4/codigoPHP/MtoDepartamentos.php'); //redireccionamiento a la página principal
+    } else {
+        //A TRAVÉS DEL ACTION SE VUELVE A PASAR EL GET CON EL CODIGO, HACIENDO LA CONSULTA DE NUEVO
+        ?>
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <title>EditarDepartamento - MTO</title>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href="../webroot/css/styleOptions.css" rel="stylesheet" type="text/css"/>
+                <link rel="icon" type="image/jpg" href="../webroot/css/images/favicon.jpg"/>
+            </head>
+            <body>
                 <form id="formulario" action="<?php echo $_SERVER['PHP_SELF'] . '?codigoDep=' . $_GET['codigoDep']; ?>" method="post"> 
                     <fieldset>
                         <legend>Editar Departamento</legend>

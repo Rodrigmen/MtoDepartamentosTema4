@@ -1,49 +1,47 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>EliminarDepartamento - MTO</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="../webroot/css/styleOptions.css" rel="stylesheet" type="text/css"/>
-        <link rel="icon" type="image/jpg" href="../webroot/css/images/favicon.jpg"/>
-    </head>
-    <body>
-        <?php
-        require_once '../config/confDBPDOOne.php';
+<?php
+try {
+    $oConexionPDO = new PDO('mysql:host=db5001094469.hosting-data.io;dbname=dbs939491', 'dbu1120028', 'Covid1234$', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
+    $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        try {
-            $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
-            $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if (isset($_POST['eliminar'])) {
+        $consultaBorrar = "DELETE FROM Departamento WHERE CodDepartamento LIKE :codigo";
 
-            if (isset($_POST['eliminar'])) {
-                $consultaBorrar = "DELETE FROM Departamento WHERE CodDepartamento LIKE :codigo";
+        $borrarDepartamento = $oConexionPDO->prepare($consultaBorrar);
+        //Inserción de datos en al consulta
+        $borrarDepartamento->bindParam(':codigo', $_POST["codigo"]);
 
-                $borrarDepartamento = $oConexionPDO->prepare($consultaBorrar);
-                //Inserción de datos en al consulta
-                $borrarDepartamento->bindParam(':codigo', $_POST["codigo"]);
+        //Ejecución
+        $borrarDepartamento->execute();
 
-                //Ejecución
-                $borrarDepartamento->execute();
+        header('Location: https://daw218.ieslossauces.es/proyectoDWES/proyectoTema4/MtoDepartamentosTema4/codigoPHP/MtoDepartamentos.php'); //redireccionamiento a la página principal
+    } else {
 
-                header('Location: MtoDepartamentos.php'); //redireccionamiento a la página principal
-            } else {
+        $consultaBuscar = "SELECT * FROM Departamento WHERE CodDepartamento LIKE :codigo";
 
-                $consultaBuscar = "SELECT * FROM Departamento WHERE CodDepartamento LIKE :codigo";
+        $buscarDepartamento = $oConexionPDO->prepare($consultaBuscar);
 
-                $buscarDepartamento = $oConexionPDO->prepare($consultaBuscar);
+        //Inserción de datos en al consulta
+        $buscarDepartamento->bindParam(':codigo', $_GET["codigoDep"]);
 
-                //Inserción de datos en al consulta
-                $buscarDepartamento->bindParam(':codigo', $_GET["codigoDep"]);
+        //Ejecución
+        $buscarDepartamento->execute();
 
-                //Ejecución
-                $buscarDepartamento->execute();
-
-                while ($departamento = $buscarDepartamento->fetch(PDO::FETCH_OBJ)) {
-                    $descDep = $departamento->DescDepartamento;
-                    $volDep = $departamento->VolumenNegocio;
-                    $fechaDep = $departamento->FechaBaja;
-                }
-                ?>
+        while ($departamento = $buscarDepartamento->fetch(PDO::FETCH_OBJ)) {
+            $descDep = $departamento->DescDepartamento;
+            $volDep = $departamento->VolumenNegocio;
+            $fechaDep = $departamento->FechaBaja;
+        }
+        ?>
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <title>EliminarDepartamento - MTO</title>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href="../webroot/css/styleOptions.css" rel="stylesheet" type="text/css"/>
+                <link rel="icon" type="image/jpg" href="../webroot/css/images/favicon.jpg"/>
+            </head>
+            <body>
                 <form id="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <fieldset>
                         <legend>Eliminar Departamento</legend>
@@ -75,7 +73,7 @@
                     unset($oConexionPDO); //destruimos el objeto  
                 }
                 ?>
-                <input type="submit" name="eliminar" value="Eliminar"/>
+                <input type="submit" name="eliminar" value="Eliminar"/></a> 
                 <a href="MtoDepartamentos.php"> <input type="button" name="cancelar" value="Cancelar"></a>           
             </fieldset>
         </form>

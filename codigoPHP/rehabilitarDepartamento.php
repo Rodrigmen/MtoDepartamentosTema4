@@ -1,48 +1,46 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>RehabilitarDepartamento - MTO</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="../webroot/css/styleOptions.css" rel="stylesheet" type="text/css"/>
-        <link rel="icon" type="image/jpg" href="../webroot/css/images/favicon.jpg"/>
-    </head>
-    <body>
-        <?php
-        require_once '../config/confDBPDOOne.php';
+<?php
+try {
+    $oConexionPDO = new PDO('mysql:host=db5001094469.hosting-data.io;dbname=dbs939491', 'dbu1120028', 'Covid1234$', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
+    $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        try {
-            $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
-            $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $consultaBuscar = "SELECT * FROM Departamento WHERE CodDepartamento LIKE :codigo";
 
-            $consultaBuscar = "SELECT * FROM Departamento WHERE CodDepartamento LIKE :codigo";
+    $buscarDepartamento = $oConexionPDO->prepare($consultaBuscar);
 
-            $buscarDepartamento = $oConexionPDO->prepare($consultaBuscar);
+    //Inserción de datos en al consulta
+    $buscarDepartamento->bindParam(':codigo', $_GET["codigoDep"]);
 
-            //Inserción de datos en al consulta
-            $buscarDepartamento->bindParam(':codigo', $_GET["codigoDep"]);
+    //Ejecución
+    $buscarDepartamento->execute();
 
-            //Ejecución
-            $buscarDepartamento->execute();
+    while ($departamento = $buscarDepartamento->fetch(PDO::FETCH_OBJ)) {
+        $descDep = $departamento->DescDepartamento;
+        $volDep = $departamento->VolumenNegocio;
+        $fechaDep = $departamento->FechaBaja;
+    }
 
-            while ($departamento = $buscarDepartamento->fetch(PDO::FETCH_OBJ)) {
-                $descDep = $departamento->DescDepartamento;
-                $volDep = $departamento->VolumenNegocio;
-                $fechaDep = $departamento->FechaBaja;
-            }
+    if (isset($_POST['rehabilitar'])) {
 
-            if (isset($_POST['rehabilitar'])) {
+        $consultaActualizar = "UPDATE Departamento SET FechaBaja = NULL WHERE CodDepartamento LIKE :codigo";
 
-                $consultaActualizar = "UPDATE Departamento SET FechaBaja = NULL WHERE CodDepartamento LIKE :codigo";
-
-                $actualizarDepartamento = $oConexionPDO->prepare($consultaActualizar);
-                //Inserción de datos en al consulta
-                $actualizarDepartamento->bindParam(':codigo', $_GET['codigoDep']);
-                //Ejecución
-                $actualizarDepartamento->execute();
-                header('Location: MtoDepartamentos.php'); //redireccionamiento a la página principal
-            } else {
-                ?>
+        $actualizarDepartamento = $oConexionPDO->prepare($consultaActualizar);
+        //Inserción de datos en al consulta
+        $actualizarDepartamento->bindParam(':codigo', $_GET['codigoDep']);
+        //Ejecución
+        $actualizarDepartamento->execute();
+        header('Location: https://daw218.ieslossauces.es/proyectoDWES/proyectoTema4/MtoDepartamentosTema4/codigoPHP/MtoDepartamentos.php'); //redireccionamiento a la página principal
+    } else {
+        ?>
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <title>RehabilitarDepartamento - MTO</title>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href="../webroot/css/styleOptions.css" rel="stylesheet" type="text/css"/>
+                <link rel="icon" type="image/jpg" href="../webroot/css/images/favicon.jpg"/>
+            </head>
+            <body>
                 <form id="formulario" action="<?php echo $_SERVER['PHP_SELF'] . '?codigoDep=' . $_GET['codigoDep']; ?>" method="post">
                     <fieldset>
                         <legend>Rehabilitar Departamento</legend>
