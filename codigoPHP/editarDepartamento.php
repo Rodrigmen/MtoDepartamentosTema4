@@ -1,8 +1,9 @@
 <?php
+require_once '../config/confDBPDOOne.php';
 try {
-    $oConexionPDO = new PDO('mysql:host=db5001094469.hosting-data.io;dbname=dbs939491', 'dbu1120028', 'Covid1234$', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
+    $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET);
     $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    require '../core/201020libreriaValidacion.php';
+    require_once '../core/201020libreriaValidacion.php';
 
     /* SACAR A TRAVÉS DE UNA CONSULTA */
     $consultaBuscar = "SELECT * FROM Departamento WHERE CodDepartamento LIKE :codigo";
@@ -82,8 +83,8 @@ try {
                         <div class="required">
                             <label for="codigo">Código:</label>
                             <input type="text" name="codigo" value="<?php
-                            echo $_GET["codigoDep"];
-                            ?>" readonly/>
+                                   echo $_GET["codigoDep"];
+                                   ?>" readonly/>
                         </div>
                         <!-----------------DESCRIPCIÓN----------------->
                         <div class="optional">
@@ -137,8 +138,8 @@ try {
                         <div class="required">
                             <label for="nombre">Fecha de Baja:</label>
                             <input type="text" name="fecha"  value="<?php
-                            echo $fechaDep;
-                            ?>" readonly/>
+                                   echo $fechaDep;
+                                   ?>" readonly/>
                         </div>
                         <?php
                     }

@@ -7,8 +7,9 @@
  * @since 10-11-2020
  * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
  */
+require_once '../config/confDBPDOOne.php';
 try {
-    $oConexionPDO = new PDO('mysql:host=db5001094469.hosting-data.io;dbname=dbs939491', 'dbu1120028', 'Covid1234$', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
+    $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET);
     $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //le damos este atributo a la conexión (la configuramos) para poder utilizar las excepciones
     //Sacamos las tablas de la base de datos
     $consultaMostrarTablas = "SHOW TABLES";

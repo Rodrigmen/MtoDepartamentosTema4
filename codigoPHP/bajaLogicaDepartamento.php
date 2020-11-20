@@ -1,6 +1,7 @@
 <?php
+require_once '../config/confDBPDOOne.php';
 try {
-    $oConexionPDO = new PDO('mysql:host=db5001094469.hosting-data.io;dbname=dbs939491', 'dbu1120028', 'Covid1234$', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
+    $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET);
     $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     require_once '../core/201020libreriaValidacion.php';
 
@@ -83,24 +84,24 @@ try {
                         <div class="required">
                             <label for="codigo">Código:</label>
                             <input type="text" name="codigo" value="<?php
-                            echo $_GET["codigoDep"];
-                            ?>" readonly/>
+                                   echo $_GET["codigoDep"];
+                                   ?>" readonly/>
                         </div>
 
                         <!-----------------DESCRIPCIÓN----------------->
                         <div class="required">
                             <label for="codigo">Descripción: </label>
                             <input type="text" name="descripcion" placeholder="Departamento de..." value="<?php
-                            echo $descDep;
-                            ?>" readonly/>
+                                   echo $descDep;
+                                   ?>" readonly/>
                         </div>
 
                         <!-----------------VOLUMEN DE NEGOCIO----------------->
                         <div class="required">
                             <label for="volumen">Volumen:</label>
                             <input type="number" name="volumen"  value="<?php
-                            echo $volDep;
-                            ?>" readonly/>
+                                   echo $volDep;
+                                   ?>" readonly/>
                         </div>
 
                         <!-----------------FECHA DE NACIMIENTO----------------->
