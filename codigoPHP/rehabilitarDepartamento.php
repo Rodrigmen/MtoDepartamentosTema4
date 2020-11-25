@@ -1,5 +1,5 @@
 <?php
-require_once '../config/confDBPDOOne.php';
+require_once '../config/confDBPDO.php';
 try {
     $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET);
     $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
