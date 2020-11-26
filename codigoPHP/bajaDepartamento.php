@@ -70,7 +70,6 @@ try {
                     echo "<p style='color:red;'>Mensaje de error: " . $excepcionPDO->getMessage() . "</p>"; //Muestra el mesaje de error
                     echo "<p style='color:red;'>Código de error: " . $excepcionPDO->getCode() . "</p>"; // Muestra el codigo del error
                 } finally {
-
                     unset($oConexionPDO); //destruimos el objeto  
                 }
                 ?>
@@ -80,5 +79,3 @@ try {
         </form>
     </body>
 </html>
-
-

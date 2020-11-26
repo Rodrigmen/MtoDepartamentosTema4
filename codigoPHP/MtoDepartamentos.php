@@ -16,25 +16,21 @@
                 <img class="imgprinc" id="casa" src="../webroot/css/images/inicio.png" alt="Página Principal" title="Página Principal"/>
             </a>
             <h1 id="titulo">Mantenimiento de Departamentos</h1>
-
         </header>
-
         <?php
         /**
          * Página principal de Mantenimiento de Departamentos
          * 
          * @version 1.0.0
-         * @since 18-11-2020
+         * @since 26-11-2020
          * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
          */
         require_once '../config/confDBPDO.php';
-
         try {
             $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
             $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //le damos este atributo a la conexión (la configuramos) para poder utilizar las excepciones
             //Requerimos una vez la libreria de validaciones
             require_once '../core/201020libreriaValidacion.php';
-            ;
             ?>
             <form id="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <fieldset>
@@ -67,37 +63,31 @@
                     </select>
                 </fieldset>
             </form>
-
             <?php
             $descripcionBuscada = "";
             if (isset($_POST['buscar'])) {
                 $descripcionBuscada = $_POST['descripcion'];
             }
-
+            //Consulta preparada a la base de datos
             $consultaBuscar = "SELECT * FROM Departamento WHERE DescDepartamento LIKE CONCAT('%', :descripcion, '%')";
-
             $buscarDepartamento = $oConexionPDO->prepare($consultaBuscar);
-
             //Inserción de datos en al consulta
             $buscarDepartamento->bindParam(':descripcion', $descripcionBuscada);
-
             //Ejecución
             $buscarDepartamento->execute();
-
             $numeroDepartamentos = $buscarDepartamento->rowCount(); //número de departamentos encontrados
-
             if ($numeroDepartamentos !== 0) { //si si se encuentran departamentos, se muestran
                 echo "<table>"
                 . "<thead>"
                 . "<tr>"
                 . "<th>Código</th>"
-                        ."<th> </th>"
+                . "<th> </th>"
                 . "<th>Descripción</th>"
-                        ."<th> </th>"
+                . "<th> </th>"
                 . "<th>Volumen de negocio</th>"
-                        ."<th> </th>"
+                . "<th> </th>"
                 . "<th>Fecha de baja</th>"
-                        ."<th> </th>"
+                . "<th> </th>"
                 . "<th>Opciones</th>"
                 . "</tr>"
                 . "</thead>"
@@ -111,7 +101,6 @@
                     if (!is_null($fechaDep)) {
                         $habilitado = false;
                     }
-
                     if ($habilitado === false) {
                         echo "<tr style='background-color:#FA6D5C;'>";
                     } else {
@@ -120,13 +109,14 @@
                     echo "<td>$codigoDep</td>"
                     . "<td>$descDep</td>"
                     . "<td>$volDep</td>"
-                            . "<td>";
+                    . "<td>";
                     if (is_null($fechaDep)) {
                         echo " ";
                     } else {
-                       echo $fechaDep;
+                        echo $fechaDep;
                     }
                     echo "</td>";
+                    //OPCIONES POSIBLES CON EL DEPARTAMENTO
                     ?>
                 <td>
                     <a href="editarDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
@@ -145,14 +135,13 @@
                 </td>
                 <?php
                 echo '<td>';
+                //OPCIOÓN DE HABILITACIÓN O INHABILITACION DEL DEPARTAMENTO (SEGÚN SI ESTA HABILITADO O NO)
                 if ($habilitado) {
-                    
                     ?>
                     <a href="bajaLogicaDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
                         <img class="imgejer" src="../webroot/css/images/habilitar.png"  alt="Inhabilitar" title="Inhabilitar"/>
                     </a>
                     <?php
-                    
                 } else {
                     ?>
                     <a href="rehabilitarDepartamento.php?codigoDep=<?php echo $codigoDep ?>">
@@ -163,7 +152,6 @@
                 echo '</td>';
                 echo "</tr>";
             }
-
             echo "</tbody>"
             . "</table>";
         } else {  //si no encontramos ningún departamento, lo notificamos al usuario
@@ -173,12 +161,9 @@
         echo "<p style='color:red;'>Mensaje de error: " . $excepcionPDO->getMessage() . "</p>"; //Muestra el mesaje de error
         echo "<p style='color:red;'>Código de error: " . $excepcionPDO->getCode() . "</p>"; // Muestra el codigo del error
     } finally {
-
         unset($oConexionPDO); //destruimos el objeto  
     }
     ?>
-
-
 </body>
 <footer>
     <ul>

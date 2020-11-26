@@ -67,4 +67,3 @@ try {
     unset($oConexionPDO); //destruimos el objeto
 }
 ?>
-    
