@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../webroot/css/styleOptions.css" rel="stylesheet" type="text/css"/>
         <link rel="icon" type="image/jpg" href="../webroot/css/images/favicon.jpg"/>
-
     </head>
     <body>
         <?php
@@ -14,7 +13,7 @@
          * Formulario para añadir un departamento en la tabla Departamento con validación de entrada y control de errores. [PDO]
          * 
          * @version 1.0.0
-         * @since 29-10-2020
+         * @since 26-11-2020
          * @author Rodrigo Robles <rodrigo.robmin@educa.jcyl.es>
          */
         require_once '../config/confDBPDO.php';
@@ -65,13 +64,10 @@
                     $aErrores['eCodigo'] = "¡Código ya EXISTENTE!";
                 }
 
-
                 //DESCRIPCIÓN (input type="text") [OBLIGATORIO {texto alfabetico}] 
                 $aErrores['eDescripcion'] = validacionFormularios::comprobarAlfaNumerico($_POST['descripcion'], 35, 1, REQUIRED);
                 //VOLUMEN DE NEGOCIO (input type="number") [OBLIGATORIO {número entero}] 
                 $aErrores['eVolumen'] = validacionFormularios::comprobarEntero($_POST['volumen'], PHP_INT_MAX, 1, REQUIRED);
-
-
 
                 //recorremos el array de posibles errores (aErrores), si hay alguno, el campo se limpia y entradaOK es falsa (se vuelve a cargar el formulario)
                 foreach ($aErrores as $campo => $validacion) {
@@ -180,8 +176,6 @@
                             }
                             ?>
                         </div>
-
-
                         <input type="submit" name="enviar" value="Insertar" />
                         <a href="MtoDepartamentos.php"> <input type="button" name="cancelar" value="Cancelar"></a>  
                     </fieldset>

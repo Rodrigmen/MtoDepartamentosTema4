@@ -10,7 +10,6 @@
     <body>
         <?php
         require_once '../config/confDBPDO.php';
-
         try {
             $oConexionPDO = new PDO(DSN, USER, PASSWORD, CHARSET); //creo el objeto PDO con las constantes iniciadas en el archivo datosBD.php
             $oConexionPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -71,7 +70,6 @@
                     echo "<p style='color:red;'>Mensaje de error: " . $excepcionPDO->getMessage() . "</p>"; //Muestra el mesaje de error
                     echo "<p style='color:red;'>Código de error: " . $excepcionPDO->getCode() . "</p>"; // Muestra el codigo del error
                 } finally {
-
                     unset($oConexionPDO); //destruimos el objeto  
                 }
                 ?>
@@ -81,5 +79,3 @@
         </form>
     </body>
 </html>
-
-
